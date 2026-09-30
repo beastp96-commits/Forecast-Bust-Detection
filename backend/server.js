@@ -39,13 +39,19 @@ app.get("/weather", async (req, res) => {
       `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&hourly=precipitation_probability&timezone=auto`
     );
 
-    const weatherData = await weatherResponse.json();
-    if (!weatherResponse.ok) {
+   const weatherData = await weatherResponse.json();
+
+if (!weatherResponse.ok) {
   throw new Error(`Weather API error: ${weatherResponse.status}`);
 }
 
 if (!weatherData.current) {
-  throw new Error("Weather API did not return current weather data");
+  console.log("Open-Meteo response:", weatherData);
+
+  return res.status(502).json({
+    error: "Weather API did not return current weather data",
+    details: weatherData
+  });
 }
 
     res.json({
