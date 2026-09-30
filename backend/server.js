@@ -40,6 +40,13 @@ app.get("/weather", async (req, res) => {
     );
 
     const weatherData = await weatherResponse.json();
+    if (!weatherResponse.ok) {
+  throw new Error(`Weather API error: ${weatherResponse.status}`);
+}
+
+if (!weatherData.current) {
+  throw new Error("Weather API did not return current weather data");
+}
 
     res.json({
       city: location.name,
