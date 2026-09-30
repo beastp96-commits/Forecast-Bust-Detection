@@ -24,9 +24,9 @@ useEffect(() => {
     }
 
    try {
-  const response = await fetch(
-    `http://localhost:5000/weather?city=${encodeURIComponent(city)}`
-  );
+ const response = await fetch(
+  `https://forecast-bust-detection-9h2blnr1k-beastp96-commits.vercel.app/weather?city=${encodeURIComponent(city)}`
+);
 
   const data = await response.json();
   setWeather(data);
